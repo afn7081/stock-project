@@ -39,7 +39,8 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .requestMatchers("/api/**")
                 .permitAll()
-
+                 .requestMatchers("/admin")
+                 .hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
 
@@ -50,8 +51,7 @@ public class SecurityConfig {
                 .and()
 
                 .authenticationProvider(authenticationProvider())
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                ;
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
 
     }
@@ -67,7 +67,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean

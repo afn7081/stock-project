@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,7 +21,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final AuthenticationManager authenticationManager;
-    private final UserDetailsService userDetailsService;
     private final JwtUtil jwtUtil;
 
     @Override
@@ -31,16 +31,32 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String authenticateUser(String username, String password) throws Exception{
-
+    public void authenticateUser(String username, String password) throws Exception{
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username,password));
-        final UserDetails user=userDetailsService.loadUserByUsername(username);
-        if (user!=null){
-            return jwtUtil.generateToken(user);
-        }
-        else {
+
+
+
+    }
+
+    @Override
+    public User getUserByUserName(String userName) {
+        User user= userRepository.findByUsername(userName);
+        if (user==null){
             throw new AuthenticationServiceException("User Does not exist");
         }
+        return user;
     }
+
+    @Override
+    public String getjwtToken(User user) {
+        try {
+            String jwtToken=jwtUtil.generateToken(user);
+            return jwtToken;
+
+        }catch (Throwable t){
+          throw  new BadCredentialsException("Can't generate token bad credentials");
+        }
+    }
+
 
 }

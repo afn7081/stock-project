@@ -7,8 +7,10 @@ public interface UserService {
 
     void registerUser(User user);
 
-    String authenticateUser(String username, String password) throws Exception;
+    void authenticateUser(String username, String password) throws Exception;
 
+    User getUserByUserName(String userName);
 
+    String getjwtToken(User user);
 
 }
