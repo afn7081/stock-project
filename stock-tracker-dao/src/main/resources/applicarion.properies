@@ -1,3 +1,3 @@
 spring.datasource.url=jdbc:mysql://localhost:3306/tracker
-spring.datasource.username=root
+spring.datasource.username=ubuntu
 spring.datasource.password=mypass
