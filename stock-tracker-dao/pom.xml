@@ -57,6 +57,7 @@
                         <goals>
                             <goal>repackage</goal>
                         </goals>
+
                     </execution>
                 </executions>
             </plugin>

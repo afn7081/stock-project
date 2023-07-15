@@ -3,6 +3,6 @@ package com.stock.tracker;
 public class Main {
 
     public static void main(String[] args) {
-        
+
     }
 }
