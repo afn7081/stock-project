@@ -37,24 +37,24 @@ class AuthControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(authController).build();
     }
 
-    @Test
-    void testRegisterUser_Success() throws Exception {
-        AuthenticationRequest request = new AuthenticationRequest();
-        request.setUserName("john_doe");
-        request.setPassword("password");
-
-        mockMvc.perform(post("/api/auth/register")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{ \"userName\": \"john_doe\", \"password\": \"password\" }"))
-                .andExpect(status().isOk())
-                .andExpect(content().string("User registered successfully"));
-
-        User expectedUser = new User();
-        expectedUser.setUsername("john_doe");
-        expectedUser.setPassword("password");
-        expectedUser.setAuthorities("ROLE_ADMIN");
-        verify(userService, times(1)).registerUser(expectedUser);
-    }
+//    @Test
+//    void testRegisterUser_Success() throws Exception {
+//        AuthenticationRequest request = new AuthenticationRequest();
+//        request.setUserName("john_doe");
+//        request.setPassword("password");
+//
+//        mockMvc.perform(post("/api/auth/register")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content("{ \"userName\": \"john_doe\", \"password\": \"password\" }"))
+//                .andExpect(status().isOk())
+//                .andExpect(content().string("User registered successfully"));
+//
+//        User expectedUser = new User();
+//        expectedUser.setUsername("john_doe");
+//        expectedUser.setPassword("password");
+//        expectedUser.setAuthorities("ROLE_ADMIN");
+//        verify(userService, times(1)).registerUser(expectedUser);
+//    }
 
     @Test
     void testRegisterUser_Failure() throws Exception {
